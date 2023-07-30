@@ -1,0 +1,511 @@
+/* html, body {
+     height: 100%;
+     width: 100%;
+     overflow-x: hidden;
+}
+ */
+/* synth wave grid moving and flashing light https://codepen.io/kes2401/pen/erpLXo */
+ @import url(https://fonts.googleapis.com/css?family=Exo+2:200i);
+ body {
+     background: black;
+     overflow-x: hidden;
+     font-family: 'Exo 2', sans-serif;
+}
+ #canvas {
+     cursor: url('https://i.ibb.co/mDGwDSw/ship4.png'), auto;
+}
+ :root {
+    /* Set neon color */
+     --neon-text-color: #31c16a;
+     --neon-border-color: #08fa0f;
+}
+ .logo{
+     color: #08fa0f;
+     font-family: "Space Mono", sans-serif;
+     font-size:18px;
+}
+ #running_text{
+     font-size: 14px;
+     font-family: "Space Mono", sans-serif;
+     color: #08fa0f;
+}  
+#tooltip {
+  background-color: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+ .player-display {
+     display: flex;
+     flex-direction: row;
+     height: 200px;
+     text-transform: uppercase;
+     font-family: Arial;
+     width:90%;
+     margin: 8px;
+    /* animation: flicker 1.5s infinite alternate;
+     */
+}
+ .view {
+     display: flex;
+     flex-direction: row;
+     flex-wrap:wrap;
+    /* height: 500px;
+     */
+     width:90%;
+     text-transform: uppercase;
+     font-family: Arial;
+}
+ .scroller {
+     overflow-y: scroll;
+     scrollbar-color: #31c16a #12211A;
+     scrollbar-width: thin;
+}
+ #data {
+     color: black;
+     font-size: 12px;
+     background: black;
+     flex-direction: row;
+     justify-content: space-evenly;
+     overflow-wrap: break-word;
+}
+ #data2 {
+     color: black;
+     font-size: 12px;
+     background: black;
+     flex-wrap: wrap;
+     flex-direction: row;
+}
+ .tab {
+     padding: 8px;
+     max-width: 20%;
+     font-size: 14px;
+     font-family: "Space Mono", sans-serif;
+     color: #08fa0f;
+     background: #12211a;
+}
+ .status{
+     font-size: 14px;
+     font-family: "Space Mono", sans-serif;
+     color: #08fa0f;
+     background: #12211a;
+     width:25%;
+}
+ .menu {
+     display: flex;
+     flex-direction: row;
+    /* max-width: 85%;
+     */
+     flex-wrap: wrap;
+}
+ .img_nft{
+     display:flex;
+     padding-bottom: 5px;
+     width: 10em;
+}
+ .ship_img{
+    /* margin:3px;
+     padding: 4px;
+     border: 1px solid #31c16a;
+     */
+     margin: 8px;
+     padding: 1em;
+     border: 1px solid #31c16a;
+}
+ .btn {
+     padding: 16px;
+     margin: 8px;
+     min-width: 10em;
+    /* border-radius:30px;
+     */
+     border: 3px solid #31c16a;
+     font-size: 14px;
+     font-family: "Space Mono", sans-serif;
+}
+ .green_btn {
+     border: 3px solid #31c16a;
+     color: #08fa0f;
+     background: #12211a;
+}
+ .green_btn:hover {
+     border: 3px solid red;
+     color: white;
+     background: black;
+}
+.canvas-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#grid-canvas{
+    opacity: 0.5;
+     border-radius:30px;
+}
+
+ .canvas {
+     border:3px solid #31C16A;
+     padding-left: 0;
+     padding-right: 0;
+     margin-left: auto;
+     margin-right: auto;
+     margin: 0.5em;
+     border-radius:30px;
+}
+ .action_text{
+     width:500px;
+     height:500px;
+     overflow-y:scroll;
+     padding: 16px;
+     margin: 8px;
+     min-width:50%;
+     border: 3px solid #31c16a;
+     color: #08fa0f;
+     background: #12211a;
+}
+ .action_text h1{
+     color: #08fa0f;
+     font-family: "Space Mono", sans-serif;
+     font-size:18px;
+}
+ .action_text p{
+     color: #08fa0f;
+     font-family: "Space Mono", sans-serif;
+     font-size: 14px;
+}
+ .action_text a{
+     color: #08fa0f;
+     font-family: "Space Mono", sans-serif;
+     font-size: 14px;
+}
+ .orb_tab {
+     background: #020204;
+}
+ .next {
+     background: yellow;
+}
+ .blink {
+     background-color: black;
+     animation: blink-animation 1s steps(5, start) infinite;
+     -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+ @keyframes blink-animation {
+     to {
+         visibility: hidden;
+    }
+}
+ @-webkit-keyframes blink-animation {
+     to {
+         visibility: hidden;
+    }
+}
+ .blinking {
+     animation: blinker .5s linear infinite;
+}
+ @keyframes blinker {
+     50% {
+         opacity: 0;
+    }
+}
+ .grain {
+     position: fixed;
+     pointer-events: none;
+     -webkit-animation: grainAnimation 1s steps(4) infinite;
+     animation: grainAnimation 1s steps(4) infinite;
+     background-image: url(https://image.ibb.co/mPMJEH/grain_888ad7615a.png);
+     height: 180%;
+     left: -40%;
+     top: -40%;
+     width: 180%;
+     z-index: 46;
+}
+ @-webkit-keyframes grainAnimation{
+     0%{
+         -webkit-transform:translate(0,0);
+         transform:translate(0,0) 
+    }
+     10%{
+         -webkit-transform:translate(-5%,-5%);
+         transform:translate(-5%,-5%) 
+    }
+     20%{
+         -webkit-transform:translate(-10%,5%);
+         transform:translate(-10%,5%) 
+    }
+     30%{
+         -webkit-transform:translate(5%,-10%);
+         transform:translate(5%,-10%) 
+    }
+     40%{
+         -webkit-transform:translate(-5%,15%);
+         transform:translate(-5%,15%) 
+    }
+     50%{
+         -webkit-transform:translate(-10%,5%);
+         transform:translate(-10%,5%) 
+    }
+     60%{
+         -webkit-transform:translate(15%,0);
+         transform:translate(15%,0) 
+    }
+     70%{
+         -webkit-transform:translate(0,10%);
+         transform:translate(0,10%) 
+    }
+     80%{
+         -webkit-transform:translate(-15%,0);
+         transform:translate(-15%,0) 
+    }
+     90%{
+         -webkit-transform:translate(10%,5%);
+         transform:translate(10%,5%) 
+    }
+     100%{
+         -webkit-transform:translate(5%,0);
+         transform:translate(5%,0) 
+    }
+}
+ @keyframes grainAnimation{
+     0%{
+         -webkit-transform:translate(0,0);
+         transform:translate(0,0) 
+    }
+     10%{
+         -webkit-transform:translate(-5%,-5%);
+         transform:translate(-5%,-5%) 
+    }
+     20%{
+         -webkit-transform:translate(-10%,5%);
+         transform:translate(-10%,5%) 
+    }
+     30%{
+         -webkit-transform:translate(5%,-10%);
+         transform:translate(5%,-10%) 
+    }
+     40%{
+         -webkit-transform:translate(-5%,15%);
+         transform:translate(-5%,15%) 
+    }
+     50%{
+         -webkit-transform:translate(-10%,5%);
+         transform:translate(-10%,5%) 
+    }
+     60%{
+         -webkit-transform:translate(15%,0);
+         transform:translate(15%,0) 
+    }
+     70%{
+         -webkit-transform:translate(0,10%);
+         transform:translate(0,10%) 
+    }
+     80%{
+         -webkit-transform:translate(-15%,0);
+         transform:translate(-15%,0) 
+    }
+     90%{
+         -webkit-transform:translate(10%,5%);
+         transform:translate(10%,5%) 
+    }
+     100%{
+         -webkit-transform:translate(5%,0);
+         transform:translate(5%,0) 
+    }
+}
+/* if the screen is 600 px or narrower */
+ @media only screen and (max-width: 600px) {
+     .view{
+         flex-wrap:wrap;
+         width:100% !important;
+    }
+     .tab{
+         width:100% !important;
+    }
+}
+/* FX - flicker */
+/* Animate neon flicker */
+ @keyframes flicker {
+     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+         text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-text-color), 0 0 4rem var(--neon-text-color), 0 0 6rem var(--neon-text-color), 0 0 8rem var(--neon-text-color), 0 0 10rem var(--neon-text-color);
+         box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
+    }
+     20%, 24%, 55% {
+         text-shadow: none;
+         box-shadow: none;
+    }
+}
+ .shake {
+     -webkit-animation: shake-vertical 8s cubic-bezier(0.455, 0.030, 0.515, 0.955) 0.5s infinite both;
+     animation: shake-vertical 8s cubic-bezier(0.455, 0.030, 0.515, 0.955) 0.5s infinite both;
+}
+/* ---------------------------------------------- * Generated by Animista on 2022-11-15 11:8:30 * Licensed under FreeBSD License. * See http://animista.net/license for more info. * w: http://animista.net, t: @cssanimista * ---------------------------------------------- */
+/** * ---------------------------------------- * animation shake-vertical * ---------------------------------------- */
+ @-webkit-keyframes shake {
+     0%, 100% {
+         -webkit-transform: translateY(0);
+         transform: translateY(0);
+    }
+     10%, 30%, 50%, 70% {
+         -webkit-transform: translateY(-4px);
+         transform: translateY(-4px);
+    }
+     20%, 40%, 60% {
+         -webkit-transform: translateY(4px);
+         transform: translateY(4px);
+    }
+     80% {
+         -webkit-transform: translateY(3.2px);
+         transform: translateY(3.2px);
+    }
+     90% {
+         -webkit-transform: translateY(-3.2px);
+         transform: translateY(-3.2px);
+    }
+}
+ @keyframes shake-vertical {
+     0%, 100% {
+         -webkit-transform: translateY(0);
+         transform: translateY(0);
+    }
+     10%, 30%, 50%, 70% {
+         -webkit-transform: translateY(-4x);
+         transform: translateY(-4px);
+    }
+     20%, 40%, 60% {
+         -webkit-transform: translateY(4px);
+         transform: translateY(4px);
+    }
+     80% {
+         -webkit-transform: translateY(3.2px);
+         transform: translateY(3.2px);
+    }
+     90% {
+         -webkit-transform: translateY(-3.2px);
+         transform: translateY(-3.2px);
+    }
+}
+ .scale-in-center{
+    -webkit-animation:scale-in-center .15s cubic-bezier(.25,.46,.45,.94) both;
+    animation:scale-in-center .15s cubic-bezier(.25,.46,.45,.94) both
+}
+/* ---------------------------------------------- * Generated by Animista on 2022-11-18 2:16:9 * Licensed under FreeBSD License. * See http://animista.net/license for more info. * w: http://animista.net, t: @cssanimista * ---------------------------------------------- */
+ @-webkit-keyframes scale-in-center{
+    0%{
+        -webkit-transform:scale(0);
+        transform:scale(0);
+        opacity:1
+    }
+    100%{
+        -webkit-transform:scale(1);
+        transform:scale(1);
+        opacity:1
+    }
+}
+@keyframes scale-in-center{
+    0%{
+        -webkit-transform:scale(0);
+        transform:scale(0);
+        opacity:1
+    }
+    100%{
+        -webkit-transform:scale(1);
+        transform:scale(1);
+        opacity:1
+    }
+}
+ .modal {
+border: 3px solid #31c16a;
+padding:5%;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color:black;
+color:white;
+display: none;
+align-items: center;
+justify-content: center;
+}
+
+}
+.modal-content {
+background-color: white;
+border: 2px solid green;
+padding: 1em;
+width: 20%;
+display: flex;
+flex-direction: column;
+} 
+
+.modal select, .modal input {
+margin: 0.5em 0;
+padding: 0.5em;
+}
+.modal button {
+padding: 0.5em;
+margin: 0.5em;
+background-color: green;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+/* navigation tabs for the galaxies  */
+
+.sectorsList{  
+display: flex;
+flex-flow:row;  
+font-family: "Space Mono", sans-serif; 
+border: 3px solid #31c16a;
+color: #08fa0f;
+background: #12211a;
+align-items: center;
+justify-content: center;
+padding: 16px;
+margin: 8px;
+min-width: 10em;
+} 
+ 
+
+.sectorsList span{   
+text-align:center; 
+color:#08fa0f;  
+  margin-right:5px;
+/* width:25%;  */
+}
+.sectorsList a{ 
+  padding:5px;
+}
+
+.sectorsList a.activeitem {
+    color: #297a49;
+    background: #08fa0f; 
+}
+
+.sectorsList a:active,
+.sectorsList a:focus {
+    color: #297a49;
+    background: #08fa0f;
+}
+
+.activeitem {
+   background-color: #08fa0f;
+  color:#297a49;
+}
+
+
+.box{
+    border: 1px solid #12211a;
+    padding: 5px;
+    display: block;
+    margin-top: 10px;
+    background: #08fa0f;
+    color: #1c3020;
+    font-weight: bold;
+}
+
+.data-element {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
