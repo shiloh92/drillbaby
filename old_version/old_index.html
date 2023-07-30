@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Risk & Tremble: Brave the dangers, mine the riches | Space Mining Survival Adventure Game with WAX Blockchain
+    Technology</title>
+  <link rel="shortcut icon" href="./images/favicon.ico">
+
+  <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/sass.js/0.11.1/sass.min.js">
+  </script> -->
+  <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+ -->
+  <script src="waxjs.js">
+  </script> 
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.cdnfonts.com/css/common-pixel" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/space-mono" rel="stylesheet">
+  <script src="https://unpkg.com/axios@1.0.0/dist/axios.min.js">
+  </script><script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"></script> 
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+
+</head>
+
+<body>
+  <div class="grain"></div>
+  <div class="logo"><img src="https://i.ibb.co/QcPsTrJ/loj2.png" width='32' height='32'>RISK & TREMBLE</div>
+  <div id="running_text"><span class="updating-text nice-font"> </span><span class="blinking">|</span> </div>
+  <div class="menu">
+ 
+
+    <div class="status">
+      <div id="player_ship_image"></div>
+      <span id="player_main">Wallet and Active asset id goes here.</span>
+      <span id="player_secondary">Asset data goes here.</span>
+    </div>
+    <button id="login_btn" class="btn green_btn" onclick="login()">Login</button>
+    <button id="test_btn" class="btn green_btn" onclick="loadCollections('1p3ty.wam')">Test Load Inventory</button>
+    <button class="btn green_btn" onclick="scan()">Scan</button>
+    <button class="btn green_btn" onclick="refiner()">Refine</button>
+    <button class="btn green_btn">Attack (F)</button>
+    <button class="btn green_btn" onclick="saveTest()">Save Code</button>
+
+  </div>
+
+  <div class="view">
+    <div class="canvas-container" style="position: relative;">
+      <canvas id="grid-canvas" width="500" height="500" style="position: absolute;"></canvas>
+      <canvas id="canvas" class="canvas" width="500" height="500"></canvas>
+    </div>
+
+    <div class="action_text"> 
+      <div id="player_setup"> 
+        <h1 id="action_h1">Brave the dangers, mine the riches: Space Survival Mining</h1>
+
+      <p id="action_p" ><img src="./images/assets/ps-intro.png" width='172' height='172'><br>
+        Are you ready to risk it all? Launch into the galaxy in your own mining vessel, searching for
+        valuable resources. Brave the dangers of space as you extract precious minerals like Mog, Celinium, and Ils.
+        Refine your resources and upgrade your ship to become a powerful player in the galactic market. But be warned,
+        as you delve deeper into unknown territories, hostile factions and treacherous space anomalies threaten to end
+        your journey prematurely. Will you rise to the challenge and conquer the galaxy, or fall victim to the fear and
+        risk of exploration?
+        <br></br>Join the action and find out now!
+        <span class="box">Use your Pseudai NFTs to instantly access your very own custom starship.</span>
+      </p>
+      <p id="action_p2"></p>
+      <br><br>
+      <div id="player_nft_menu">
+      <button class="btn green_btn" onclick="switchNFT('back', mergedCollection)">BACK</button>
+      <button class="btn green_btn" onclick="switchNFT('next', mergedCollection)">NEXT</button>
+      <button class="btn green_btn" onclick="fillPlayerAssetId()">ACCEPT THIS SHIP</button>
+    </div>
+  </div>
+
+ <div id="info" class="status">
+  <div id="id"></div>
+ <!--  <p id="task_a"></p>
+  <p id="task_b"></p>
+  <p id="progress"></p>
+  <p id="dest_x"></p>
+  <p id="dest_y"></p>
+  <p id="x"></p>
+  <p id="y"></p> -->
+</div>
+
+    <!--   <div class="sectorsList">
+        <span>Sector</span>
+        <a class="nav" href="#/" onclick="navigate(1)">A</a>
+        <a class="nav" href="#/" onclick="navigate(2)">B</a>
+        <a class="nav" href="#/" onclick="navigate(3)">C</a>
+        <a class="nav" href="#/" onclick="navigate(4)">D</a>
+      </div> -->
+
+      <!-- <button class="btn green_btn" onclick="
+makeTea('action_h1')">TEA</button> -->
+      <button class="btn green_btn" onclick="toggleDisplayNames()">TOGGLE NAME TAGS</button>
+
+    </div>
+  </div>
+  <div>
+    <div class="player-display scroller" id="data">Data not loaded</div>
+    <div class="player-display scroller" id="data2">Data not loaded</div>
+  </div>
+
+  <div id="refine-modal" class="modal">
+    <div class="modal-content">
+      <h2>Refine Minerals</h2>
+      <label for="mineral-select">Select Mineral:</label>
+      <select id="mineral-select" class="modal-select">
+        <option value="mog" selected>MOG: <span id="mog-amount">0</span></option>
+        <option value="ils">ILS: <span id="ils-amount">0</span></option>
+        <option value="cel">CEL: <span id="cel-amount">0</span></option>
+      </select>
+      <br>
+      <label for="refine-select">Select Mineral to Refine Into:</label>
+      <select id="refine-select" class="modal-select">
+        <option value="mog">MOG</option>
+        <option value="ils">ILS</option>
+        <option value="cel" selected>CEL</option>
+      </select>
+      <div class="amount-input-group">
+        <label for="amount-input" class="modal-label">Amount:</label>
+        <input type="number" id="amount-input" value="5" step="1" class="modal-input">
+        <div class="arrow-buttons">
+          <button id="up-arrow" class="up-arrow modal-button">&#x25B2;</button>
+          <button id="down-arrow" class="down-arrow modal-button">&#x25BC;</button>
+        </div>
+      </div>
+      <button id="refine-button" class="modal-button">Refine</button>
+      <button id="cancel-button" class="cancel-button modal-button">Cancel</button>
+      <p id="refine-message" style="display: none;"></p>
+    </div>
+  </div>
+
+  <div id="save-code-modal" class="modal">
+    <div class="modal-content">
+      <h2>Save/Load Code</h2>
+      <p id="save-code-message"></p>
+      <label for="save-code-input">Enter your code to load:</label>
+      <input type="text" id="save-code-input" onchange="getInputLoadCode()">
+      <label for="nft-select">Select NFT:</label>
+      <select id="nft-select">
+      </select>
+      <button id="load-save-button" onclick="loadGame(wallet)">Load Save</button>
+      <button id="save-game-button" onclick="saveGame(wallet)">Save Game</button>
+      <p id="nft-message" style="display: none;"></p>
+      <button id="save-code-cancel-button" class="cancel-button">Cancel</button>
+    </div>
+  </div>
+
+
+  <script src="index.js"></script>
+  <script>
+    // set the defaults for the refiner
+
+const wax = new waxjs.WaxJS({
+  rpcEndpoint: 'https://wax.greymass.com'
+})
+    
+    window.onload = function () {
+      document.getElementById("mineral-select").value = "mog";
+      document.getElementById("refine-select").value = "ils";
+    };  
+  
+  </script>
+
+</body>
+
+</html>
