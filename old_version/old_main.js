@@ -8,6 +8,7 @@ var myNFT = {};
 // DO NOT MOVE player object anywhere !!!
 
 var player = {
+  selectedNFT: null ,
   ship: "no ship",
   asset: "none",
   class: "none",
@@ -24,6 +25,9 @@ var player = {
 // }
 
 function startGame() {
+    if (player.selectedNFT) {
+    player.class = player.selectedNFT.class;
+  }
   asteroidArray = createStarSystem(1, 32);
   console.log(asteroidArray.length)
   createPlayerShip(); 
@@ -259,6 +263,11 @@ function drawAsteroids(ctx, arr) {
     ctx.font = "10px MS Sans Serif";
   } 
   });
+}
+
+function fillPlayerAssetId() {
+    var index = /* index of the selected NFT */;
+    player.selectedNFT = mergedCollection[index]; // assuming 'index' is the index of the selected NFT in the 'mergedCollection' array
 }
 
 function drawShips(ctx, ships) {
@@ -1111,6 +1120,10 @@ function refiner() {
  
 
 function updatePlayerUI() { 
+  if (player.selectedNFT) {
+    player.class = player.selectedNFT.class;
+  }
+  
   var current_ship = player.ship;
   var current_class = player.class;
   document.getElementById("player_main").innerHTML = 'Captain ' + wallet + '\'s NFT ID# ' + player.asset + ", Model: " + current_ship +  " , Class: " + current_class;
