@@ -1,0 +1,28 @@
+
+Movement
+Player clicks in canvas on a new travel destination and the ship they have moves to that destination. 
+AI ships behave in 3 ways - attack, evade, mine, wait and make repairs
+The player can defend by clicking space when enters "Attack mode" - the perimiter around the ship is entered upon by an ai ship or ships. Clicking space bar will fire automatically in direction of closest ship and destroy them in 3 shots each. The player cna then resume travel but during attach they have limited travel range.
+AI ships can attack each other but 80% of time avoid battle. Repair cannot be done during battles or mining. Ocassionally they will pause mining so asteroids will not be drained of CEL, ILS and MOG very quickly.
+Asteroids can have 1000 to 10 CEL, ILS and MOG. ILS and MOG are converted to CEL but require more MOG to make 1 CEL than ILS. Players can upggrade their mine rate, their fire power and their fire rate. They can also repair their drill by waiting 10 seconds when the repair required button lights up. Clicking it activates the repair timer and then reenables mining.
+
+ Game Overview
+Permadeath space mining survival game. Mine asteroids for rare minerals, manage scarce resources like fuel. High risk, but rescue mechanics allow regaining progress. Features inventory management, travel, combat.
+
+World Mechanics
+Galaxies divided into sectors with persistent asteroid fields. Travel consumes fuel and tracked by coordinates. Resources: minerals, fuel, credits, salvage. Significant travel between galaxies.
+
+Mining
+Scan for asteroid fields, travel to site, setup mining beam. Increasing yield over time but limited inventory space. Periodically return to refuel and offload.
+
+Progression
+Explore sectors to find resource hotspots. Upgrade ship and equipment. Acquire rare minerals, blueprints, credits. Manage logistics and defend loot.
+
+Combat
+Pirate ships attack to steal minerals. Install weapons to defend. Battles deadly without upgrades. Can flee but risk pursuit. Destruction risks permadeath.
+
+Rescue Mechanics
+Destroyed ships can be rescued by players for progress and resources. Or restart with new captain losing all progress. Rescuer rewarded.
+
+--
+
