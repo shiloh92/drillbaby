@@ -41,36 +41,82 @@ function nextTask(ship, last_task) {
             break;
         case "mining":
             setMineDest(ship); 
-           break;
-         case "idle":  
-            setIdleDest(ship); 
-           break;
+            break;
+        case "idle":  
+            setIdleDest(ship);
+            break;
+        case "evading": 
+            setEvadeDest(ship);
+            break;
+        case "repairing":
+            setRepairDest(ship);
+            break;
+        case "interacting":
+            setInteractDest(ship);
+            break;
     }  
-
-} 
+}
  
-
-function runSim(ship) {  
+ 
+ function runSim(ship) {
   if(ship.task_a==='moving'){ 
+    // Existing moving behavior
     var dx = ship.dest_x - ship.x;
     var dy = ship.dest_y - ship.y;
     var dist = Math.sqrt(dx * dx + dy * dy);
     var speed = 1;
     ship.x += (dx / dist) * speed;
-    ship.y += (dy / dist) * speed;  
-  } else {
- 
+    ship.y += (dy / dist) * speed;   
+  } else if(ship.task_a==='evading'){
+    // Evading behavior 
+  } else if(ship.task_a==='repairing'){
+    // Repairing behavior 
+  } else if(ship.task_a==='interacting'){
+    // Interacting behavior 
   }
   ship.progress+=1;
   if(ship.progress>=100){
     ship.progress=0;
     nextTask(ship, ship.task_a)
   }
-
-} 
-
+}
 
 
+function setEvadeDest(ship) {
+    // For evasion, identify the coordinates of the nearest potential threat and move in the opposite direction with some fixed distance
+    let threat = findClosestObject(ship, npcArray); // Assuming npcArray contains all NPC ships
+    let dx = ship.x - threat.x;
+    let dy = ship.y - threat.y;
+
+    // Calculate the angle of evasion
+    let angle = Math.atan2(dy, dx);
+
+    // Set the evasion distance (e.g., 50 units)
+    let evasionDistance = 50;
+    
+    // Calculate destination coordinates
+    ship.dest_x = ship.x + Math.cos(angle) * evasionDistance;
+    ship.dest_y = ship.y + Math.sin(angle) * evasionDistance;
+}
+
+function setRepairDest(ship) {
+    // Assuming there's a Repair Station and we have its coordinates (repairStation)
+    let repairStation = {x: 100, y: 100}; // Replace with actual coordinates
+
+    // Direct ship to the repair station
+    ship.dest_x = repairStation.x;
+    ship.dest_y = repairStation.y; 
+}
+
+function setInteractDest(ship) {
+    // For interaction, we can make the ship move towards the nearest friendly ship
+    // Assuming friendly ships are in an array called friendArray 
+    let friend = findClosestObject(ship, friendArray); 
+
+    // Move to the friend's location
+    ship.dest_x = friend.x;
+    ship.dest_y = friend.y;
+}
 
 async function drawAll() {
   sim = setInterval(function() {
